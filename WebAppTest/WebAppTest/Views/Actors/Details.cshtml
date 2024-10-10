@@ -1,0 +1,121 @@
+﻿@model mwfickling_MVC_Assingment3.Models.ActorMovieVM
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Actor</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Actor.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Actor.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Actor.Gender)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Actor.Gender)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Actor.Age)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Actor.Age)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Actor.IMDBLink)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Actor.IMDBLink)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Actor.Photo)
+        </dt>
+        <dd class = "col-sm-10">
+            <img src="@Url.Action("GetActorPhoto","Actors",new {@Model.Actor.Id})" alt="Poster" width="100" height="100" />
+        </dd>
+    </dl>
+</div>
+<div>
+    <h1>Movies Casted In</h1>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Movies[0].Title)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Movies)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            <a asp-controller="Actors" asp-action="DeleteRole" asp-route-actorId="@Model.Actor.Id" asp-route-movieId="@item.Id">Delete Actor</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    <div>
+        <a asp-action="AddRole" asp-route-id="@Model?.Actor.Id">Add to Movie</a>
+    </div>
+</div>
+<div>
+    <br />
+    <h1>@Model.Actor.Name 's popularity</h1>
+    <br />
+    <div>
+        <dl>
+            <dt class="col-sm-3">
+                Average Sentiment
+            </dt>
+            <dd class="col-sm-2">
+                @Html.DisplayFor(model => model.Sentiment)
+            </dd>
+        </dl>
+    </div>
+    <br />
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RedditPosts[0].Content)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RedditPosts[0].Sentiment)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.RedditPosts)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sentiment)
+                    </td>
+                </tr>
+                        }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Actor.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
